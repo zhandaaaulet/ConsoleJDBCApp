@@ -27,7 +27,9 @@ public class MyApplication {
             try {
                 System.out.print("Enter option (1-3): ");
                 int option = scanner.nextInt();
-                if (option == 3) {
+                if (option == 2) {
+                    getUserByIdMenu();
+                } else if (option == 3) {
                     createUserMenu();
                 } else {
                     break;
@@ -55,4 +57,12 @@ public class MyApplication {
         String response = controller.createUser(name, surname, gender);
         System.out.println(response);
     }
+
+    public void getUserByIdMenu() {
+        System.out.println("Please enter id:");
+        int id = scanner.nextInt();
+        String response = controller.getUser(id);
+        System.out.println(response);
+    }
+
 }

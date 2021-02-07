@@ -6,6 +6,7 @@ import com.company.repositories.interfaces.IUserRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -46,6 +47,33 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User getUser(int id) {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "SELECT id, name, surname, gender FROM users WHERE id = ?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                User user = new User(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getBoolean("gender"));
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         return null;
     }
 

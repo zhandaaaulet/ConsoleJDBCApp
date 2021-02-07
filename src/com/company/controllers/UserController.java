@@ -20,4 +20,11 @@ public class UserController {
         return (created ? "User was created!" : "User creation was failed!");
 
     }
+
+    public String getUser(int id) {
+        User user = repo.getUser(id);
+        return user == null ? "User was not found!" : user.toString();
+    }
+
+
 }
